@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Motion Detector</title>
+  </head>
+  <body >
+    <style media="screen">
+      body {
+        background: #b9460e;
+        transition: background-color 0.5s ease;
+
+      }
+      .detected {
+        background-color: #0eb990;
+      }
+      #text {
+        position: absolute;
+        left: 38%;
+        top: 40%;
+        color: white;
+        font-size: 4em;
+      }
+
+    </style>
+    <h1 id="text">Motion Ended</h1>
+    <script src="./www/lib/jquery/dist/jquery.min.js" charset="utf-8"></script>
+    <script src="./www/lib/firebase/firebase.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var myFirebaseRef = new Firebase("https://motion-detector.firebaseio.com/");
+      myFirebaseRef.child("title").on("value", function(snapshot) {
+        if (snapshot.val() == 1) {
+          $('#text').text('Motion Detected');
+
+          $('body').addClass('detected');
+
+        } else {
+          $('#text').text('Motion Ended');
+
+          if ($('body').hasClass('detected')) {
+            $('body').removeClass('detected');
+          }
+
+        }
+      });
+    </script>
+  </body>
+</html>
